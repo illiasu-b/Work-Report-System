@@ -1,0 +1,111 @@
+<!-- employee-dashboard.html (Work Report System\employee-dashboard.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Work Report System</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="tables.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="utiilities.css"> <!-- matches actual filename on disk (typo: "utiilities") -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h2>Work Report System</h2>
+            </div>
+            <div class="navbar-menu">
+                <a href="employee-dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="my-reports.html" class="nav-link">My Reports</a>
+                <a href="employee-analytics.html" class="nav-link">Analytics</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <button class="nav-link" id="logoutBtn">Logout</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Welcome back, <span id="employeeNameDisplay">there</span></h1>
+                <p>Here's a quick look at your work report activity</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions" style="display:flex; gap:16px; margin-bottom: 30px; flex-wrap: wrap;">
+                <a href="report.html" class="btn btn-primary">📝 Submit New Report</a>
+                <a href="my-reports.html" class="btn btn-secondary">📄 View My Reports</a>
+                <a href="employee-analytics.html" class="btn btn-secondary">📈 View My Analytics</a>
+            </section>
+
+            <!-- Summary Stats -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon reports">📊</div>
+                    <div class="stat-content">
+                        <h3>Total Reports</h3>
+                        <p class="stat-value" id="myTotalReports">0</p>
+                        <small>All submissions</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon approved">✓</div>
+                    <div class="stat-content">
+                        <h3>Approved</h3>
+                        <p class="stat-value" id="myApprovedReports">0</p>
+                        <small>Approved reports</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon pending">⏳</div>
+                    <div class="stat-content">
+                        <h3>Pending</h3>
+                        <p class="stat-value" id="myPendingReports">0</p>
+                        <small>Under review</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon rejected">✕</div>
+                    <div class="stat-content">
+                        <h3>Rejected</h3>
+                        <p class="stat-value" id="myRejectedReports">0</p>
+                        <small>Need revision</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Reports -->
+            <section class="recent-reports">
+                <div class="section-header">
+                    <h3>My Recent Reports</h3>
+                    <a href="my-reports.html" class="view-all">View All →</a>
+                </div>
+                <div id="recentReportsList" class="reports-table">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
+    <script src="firestore.js"></script>
+    <script src="utils.js"></script>
+    <script src="employee-dashboard.js"></script>
+</body>
+</html>

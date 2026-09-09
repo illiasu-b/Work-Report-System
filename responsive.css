@@ -1,0 +1,189 @@
+/* public/css/responsive.css */
+
+/* Mobile menu toggle button - hidden on desktop, shown on mobile via media query below */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--dark-text);
+  padding: 4px 8px;
+}
+
+/* Dark overlay shown behind the sidebar when it's open on mobile */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .app-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    display: flex;
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
+    width: 250px;
+    transform: translateX(-100%);
+    transition: transform var(--transition-base);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  /* Explicit backup: even if .app-layout's grid-template-columns is somehow
+     still two columns (e.g. a stylesheet load-order issue), force main-content
+     to span the full grid width so it never gets squeezed into a 250px column
+     that .sidebar left behind when it became position:fixed. */
+  .main-content {
+    grid-column: 1 / -1 !important;
+    padding: 15px;
+  }
+
+  /* Employee-facing navbar (my-reports, report, employee-dashboard, profile) */
+  .navbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .navbar-menu {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: flex-start;
+  }
+
+  /* Safety net: any .table not already wrapped in .table-responsive still scrolls instead of overflowing */
+  .card > .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.2rem; }
+
+  .table {
+    font-size: 0.9rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 12px 8px;
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0;
+  }
+
+  .auth-card {
+    padding: 20px;
+  }
+
+  .report-form-container {
+    padding: 15px;
+  }
+
+  .form-section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .search-bar {
+    width: 100%;
+    max-width: none;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .stat-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .btn {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button,
+  .form-actions a {
+    width: 100%;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .navbar,
+  .sidebar,
+  .top-bar,
+  .form-actions,
+  .btn {
+    display: none !important;
+  }
+
+  .report-form-container,
+  .main-content {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  body {
+    background: white;
+  }
+
+  .stat-card,
+  .card {
+    page-break-inside: avoid;
+  }
+}

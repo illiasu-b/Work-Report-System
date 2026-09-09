@@ -1,0 +1,133 @@
+<!-- manage-reports.html (Work Report System\manage-reports.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Reports - Work Report System</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="tables.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="utiilities.css"> <!-- matches actual filename on disk (typo: "utiilities") -->
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="employees.css"> <!-- reuses the same table-responsive mobile styling -->
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Work Report System</h2>
+                <p>Admin Panel</p>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="admin.html" class="menu-item">
+                    <span>📊 Dashboard</span>
+                </a>
+                <a href="employees.html" class="menu-item">
+                    <span>👥 Employees</span>
+                </a>
+                <a href="manage-reports.html" class="menu-item active">
+                    <span>📄 Reports</span>
+                </a>
+                <a href="analytics.html" class="menu-item">
+                    <span>📈 Analytics</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <span>⚙️ Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-logout">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="search-bar">
+                    <input type="text" id="reportSearch" placeholder="Search by employee name...">
+                </div>
+                <div class="top-bar-actions">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>Manage Reports</h1>
+                    <p>Review, approve, or reject reports submitted by employees</p>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                    <table class="table" id="reportsTable">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Date</th>
+                                <th>Priority</th>
+                                <th>Hours</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    </div>
+                    <div id="emptyState" class="empty-state" style="display:none;">
+                        <div class="empty-state-icon">📄</div>
+                        <h3>No reports found</h3>
+                        <p>Try adjusting your search or filter</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Report Review Modal -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Review Report</h2>
+                <button class="modal-close" id="closeReviewModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="reviewModalDetails"><!-- Populated by JavaScript --></div>
+                <div class="form-group" style="margin-top:16px;">
+                    <label for="reviewComment">Comment (optional)</label>
+                    <textarea id="reviewComment" rows="3" placeholder="Add feedback for the employee..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="rejectBtn">Reject</button>
+                <button type="button" class="btn btn-success" id="approveBtn">Approve</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
+    <script src="firestore.js"></script>
+    <script src="utils.js"></script>
+    <script src="manage-reports.js"></script>
+    <script src="mobile-nav.js"></script>
+</body>
+</html>

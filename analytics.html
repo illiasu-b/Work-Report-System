@@ -1,0 +1,359 @@
+<!-- analytics.html (Work Report System\analytics.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - Work Report System</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="tables.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="utiilities.css"> <!-- matches actual filename on disk (typo: "utiilities") -->
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="responsive.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Work Report System</h2>
+                <p>Admin Panel</p>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="admin.html" class="menu-item">
+                    <span>📊 Dashboard</span>
+                </a>
+                <a href="employees.html" class="menu-item">
+                    <span>👥 Employees</span>
+                </a>
+                <a href="manage-reports.html" class="menu-item">
+                    <span>📄 Reports</span>
+                </a>
+                <a href="analytics.html" class="menu-item active">
+                    <span>📈 Analytics</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <span>⚙️ Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-logout">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="search-bar">
+                    <input type="text" id="globalSearch" placeholder="Search...">
+                </div>
+                <div class="top-bar-actions">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+                    <button class="action-btn" id="refreshChartsBtn" title="Refresh Charts">
+                        🔄
+                    </button>
+                    <button class="action-btn" id="printChartsBtn" title="Print Charts">
+                        🖨️
+                    </button>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>Analytics Dashboard</h1>
+                    <p>Detailed insights and performance metrics</p>
+                </div>
+
+                <section class="analytics-section">
+                    <h2>Report Status Overview</h2>
+                    <div class="charts-grid dual-chart">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Report Status Distribution</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('statusChart', 'status-distribution.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="statusChart"></canvas>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Priority Level Distribution</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('priorityChart', 'priority-distribution.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="priorityChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="analytics-section">
+                    <h2>Submission Trends</h2>
+                    <div class="charts-grid">
+                        <div class="chart-container full-width">
+                            <div class="chart-header">
+                                <h3>Daily Reports (Last 7 Days)</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('dailyChart', 'daily-reports.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="dailyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid dual-chart">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Weekly Reports (Last 4 Weeks)</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('weeklyChart', 'weekly-reports.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="weeklyChart"></canvas>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Monthly Reports (Last 6 Months)</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('monthlyChart', 'monthly-reports.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="analytics-section">
+                    <h2>Department & Employee Performance</h2>
+                    <div class="charts-grid dual-chart">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Department Performance</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('departmentChart', 'department-performance.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="departmentChart"></canvas>
+                        </div>
+
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h3>Employee Activity (Top 8)</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('employeeActivityChart', 'employee-activity.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="employeeActivityChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-container full-width">
+                            <div class="chart-header">
+                                <h3>Average Hours Worked by Department</h3>
+                                <button class="export-btn" onclick="chartManager.exportChartAsImage('hoursChart', 'hours-worked.png')">
+                                    ⬇️ Export
+                                </button>
+                            </div>
+                            <canvas id="hoursChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="analytics-section">
+                    <h2>Key Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <h4>Total Reports</h4>
+                            <p class="metric-value" id="totalReports">0</p>
+                            <small>All time</small>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Approval Rate</h4>
+                            <p class="metric-value" id="approvalRate">0%</p>
+                            <small>Approved / Total</small>
+                        </div>
+                        <div class="metric-card">
+                            <h4>Average Submission Time</h4>
+                            <p class="metric-value" id="avgSubmissionTime">0</p>
+                            <small>Minutes from start</small>
+                        </div>
+                        <div class="metric-card">
+                            <h4>This Month</h4>
+                            <p class="metric-value" id="thisMonthReports">0</p>
+                            <small>Current month submissions</small>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <style>
+        .analytics-section {
+            margin-bottom: 40px;
+        }
+
+        .analytics-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .charts-grid.dual-chart {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .chart-container:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-container.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chart-header h3 {
+            color: var(--dark-text);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .export-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .export-btn:hover {
+            background-color: var(--light-bg);
+            border-color: var(--primary-color);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .metric-card h4 {
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .metric-card small {
+            color: #999;
+        }
+
+        .action-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background-color: var(--light-bg);
+            border-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid,
+            .charts-grid.dual-chart {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chart-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
+
+    <!-- auth.js does NOT currently exist - create it, or this line will 404 -->
+    <script src="auth.js"></script>
+
+    <script src="firestore.js"></script>
+    <script src="utils.js"></script>
+    <script src="charts.js"></script>
+
+    <!-- analytics.js needs to be moved here from admin/analytics.js -->
+    <script src="analytics.js"></script>
+    <script src="mobile-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!-- employees.html (Work Report System\employees.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Employees - Work Report System</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="tables.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="utiilities.css"> <!-- matches actual filename on disk (typo: "utiilities") -->
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="employees.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Work Report System</h2>
+                <p>Admin Panel</p>
+            </div>
+            <nav class="sidebar-menu">
+                <a href="admin.html" class="menu-item">
+                    <span>📊 Dashboard</span>
+                </a>
+                <a href="employees.html" class="menu-item active">
+                    <span>👥 Employees</span>
+                </a>
+                <a href="manage-reports.html" class="menu-item">
+                    <span>📄 Reports</span>
+                </a>
+                <a href="analytics.html" class="menu-item">
+                    <span>📈 Analytics</span>
+                </a>
+                <a href="settings.html" class="menu-item">
+                    <span>⚙️ Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-logout">Logout</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="top-bar">
+                <div class="search-bar">
+                    <input type="text" id="employeeSearch" placeholder="Search by name, email, or ID...">
+                </div>
+                <div class="top-bar-actions">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="disabled">Disabled</option>
+                    </select>
+                    <select id="roleFilter">
+                        <option value="all">All Roles</option>
+                        <option value="employee">Employee</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <h1>Manage Employees</h1>
+                    <p>View and manage all employee accounts</p>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                    <table class="table" id="employeesTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Employee ID</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeesTableBody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    </div>
+                    <div id="emptyState" class="empty-state" style="display:none;">
+                        <div class="empty-state-icon">👥</div>
+                        <h3>No employees found</h3>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Employee Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Employee</h2>
+                <button class="modal-close" id="closeEditModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editEmployeeForm">
+                    <input type="hidden" id="editUserId">
+                    <div class="form-group">
+                        <label for="editFullName">Full Name</label>
+                        <input type="text" id="editFullName" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editDepartment">Department</label>
+                            <select id="editDepartment" required>
+                                <option value="engineering">Engineering</option>
+                                <option value="sales">Sales</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="hr">Human Resources</option>
+                                <option value="finance">Finance</option>
+                                <option value="operations">Operations</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editPosition">Position</label>
+                            <input type="text" id="editPosition">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Phone</label>
+                        <input type="tel" id="editPhone">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employee Detail Modal -->
+    <div class="modal" id="employeeDetailModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>Employee Details</h2>
+                <button class="modal-close" id="closeEmployeeDetailModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="employeeDetailInfo"><!-- Populated by JavaScript --></div>
+                <hr style="margin: 16px 0;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <h3 style="margin:0;">Report History</h3>
+                    <button class="btn btn-secondary btn-sm" id="exportAllReportsBtn">⬇️ Export All</button>
+                </div>
+                <div id="employeeReportsList"><!-- Populated by JavaScript --></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Read-only Report Detail Modal (opened from Employee Detail) -->
+    <div class="modal" id="employeeReportDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Report Details</h2>
+                <button class="modal-close" id="closeEmployeeReportDetailModalBtn">&times;</button>
+            </div>
+            <div class="modal-body" id="employeeReportDetailBody">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
+    <script src="firestore.js"></script>
+    <script src="utils.js"></script>
+    <script src="employees.js"></script>
+    <script src="mobile-nav.js"></script>
+    <script src="mobile-nav.js"></script>
+</body>
+</html>

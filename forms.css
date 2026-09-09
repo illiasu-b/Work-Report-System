@@ -1,0 +1,332 @@
+/* public/css/forms.css */
+
+/* ===========================
+   FORM STYLES
+   =========================== */
+
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--dark-text);
+  font-size: var(--font-size-base);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  transition: all var(--transition-base);
+  background-color: white;
+  color: var(--dark-text);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-md) center;
+  padding-right: var(--space-2xl);
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--light-bg);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--lighter-text);
+}
+
+/* Checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  margin-bottom: var(--space-md);
+}
+
+.checkbox input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.checkbox span {
+  font-size: var(--font-size-base);
+  color: var(--dark-text);
+}
+
+/* Radio */
+.radio {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  margin-bottom: var(--space-md);
+}
+
+.radio input[type="radio"] {
+  width: auto;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.radio span {
+  font-size: var(--font-size-base);
+  color: var(--dark-text);
+}
+
+/* Form Row */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-md);
+}
+
+/* Form Section */
+.form-section {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.form-section h3 {
+  color: var(--primary-color);
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-lg);
+}
+
+/* Error States */
+.error-message {
+  display: block;
+  color: var(--danger-color);
+  font-size: var(--font-size-sm);
+  margin-top: var(--space-xs);
+}
+
+input.error,
+textarea.error,
+select.error {
+  border-color: var(--danger-color);
+  background-color: var(--danger-light);
+}
+
+/* Success States */
+input.success,
+textarea.success,
+select.success {
+  border-color: var(--success-color);
+  background-color: var(--success-light);
+}
+
+/* Password Field */
+.password-field {
+  position: relative;
+  display: flex;
+}
+
+.password-field input {
+  flex: 1;
+}
+
+.toggle-password {
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--lighter-text);
+  padding: 0;
+  font-size: var(--font-size-lg);
+  transition: color var(--transition-base);
+}
+
+.toggle-password:hover {
+  color: var(--primary-color);
+}
+
+/* File Upload */
+.file-upload-area {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-2xl);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  background-color: var(--light-bg);
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-light);
+}
+
+.file-upload-area.dragover {
+  border-color: var(--primary-color);
+  background-color: var(--primary-light);
+  box-shadow: var(--shadow-md);
+}
+
+.file-upload-icon {
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-4xl);
+}
+
+.file-upload-area h4 {
+  color: var(--dark-text);
+  margin-bottom: var(--space-sm);
+}
+
+.file-upload-area p {
+  color: var(--lighter-text);
+  margin-bottom: 0;
+}
+
+/* Attachments List */
+.attachments-list {
+  margin-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.attachment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md);
+  background-color: var(--light-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex: 1;
+}
+
+.file-icon {
+  font-size: var(--font-size-2xl);
+  width: 30px;
+  text-align: center;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-weight: var(--font-weight-semibold);
+  word-break: break-all;
+}
+
+.file-size {
+  font-size: var(--font-size-sm);
+  color: var(--lighter-text);
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  cursor: pointer;
+  font-size: var(--font-size-lg);
+  padding: var(--space-sm);
+  transition: all var(--transition-base);
+}
+
+.remove-file:hover {
+  transform: scale(1.2);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.form-actions button,
+.form-actions a {
+  flex: 1;
+  text-align: center;
+}
+
+/* Input Group */
+.input-group {
+  display: flex;
+  gap: 0;
+}
+
+.input-group input,
+.input-group select {
+  flex: 1;
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.input-group input:first-child,
+.input-group select:first-child {
+  border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.input-group input:last-child,
+.input-group select:last-child {
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}

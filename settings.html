@@ -1,0 +1,158 @@
+<!-- settings.html (Work Report System\settings.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Work Report System</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="forms.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="tables.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="utiilities.css"> <!-- matches actual filename on disk (typo: "utiilities") -->
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h2>Work Report System</h2>
+            </div>
+            <div class="navbar-menu">
+                <a href="admin.html" class="nav-link">Dashboard</a>
+                <a href="employees.html" class="nav-link">Employees</a>
+                <a href="manage-reports.html" class="nav-link">Reports</a>
+                <a href="settings.html" class="nav-link active">Settings</a>
+                <button class="nav-link" id="logoutBtn">Logout</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Settings</h1>
+                <p>Configure how work reports are collected and reviewed</p>
+            </div>
+
+            <!-- Company Information -->
+            <div class="card" style="max-width: 700px; margin: 0 auto 20px;">
+                <h3 style="margin-bottom: 16px;">Company Information</h3>
+                <form id="companyForm">
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="timezone">Time Zone</label>
+                            <select id="timezone" required>
+                                <option value="UTC">UTC</option>
+                                <option value="Africa/Accra">Africa/Accra (GMT)</option>
+                                <option value="America/New_York">America/New York (ET)</option>
+                                <option value="America/Chicago">America/Chicago (CT)</option>
+                                <option value="America/Los_Angeles">America/Los Angeles (PT)</option>
+                                <option value="Europe/London">Europe/London</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="workWeekStart">Work Week Starts On</label>
+                            <select id="workWeekStart" required>
+                                <option value="monday">Monday</option>
+                                <option value="sunday">Sunday</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Company Info</button>
+                </form>
+            </div>
+
+            <!-- Report Settings -->
+            <div class="card" style="max-width: 700px; margin: 0 auto 20px;">
+                <h3 style="margin-bottom: 16px;">Report Settings</h3>
+                <form id="reportSettingsForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reportDeadline">Daily Report Deadline</label>
+                            <input type="time" id="reportDeadline" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="maxFileSize">Max Attachment Size (MB)</label>
+                            <input type="number" id="maxFileSize" min="1" max="50" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="allowedFileTypes">Allowed File Types</label>
+                        <input type="text" id="allowedFileTypes" placeholder="pdf, doc, docx, xls, xlsx, jpg, jpeg, png">
+                        <small>Comma-separated list of file extensions</small>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="requireApproval">
+                            Require admin approval before a report is finalized
+                        </label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="allowLateSubmissions">
+                            Allow reports to be submitted after the daily deadline
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Report Settings</button>
+                </form>
+            </div>
+
+            <!-- Notification Settings -->
+            <div class="card" style="max-width: 700px; margin: 0 auto;">
+                <h3 style="margin-bottom: 16px;">Notification Settings</h3>
+                <form id="notificationSettingsForm">
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="notifyOnSubmit">
+                            Email admins when a new report is submitted
+                        </label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="notifyOnMissing">
+                            Email employees who miss the daily report deadline
+                        </label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="notifyOnStatusChange">
+                            Email employees when a report is approved or rejected
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Notification Settings</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
+    <script src="firestore.js"></script>
+    <script src="utils.js"></script>
+    <script src="settings.js"></script>
+    <script src="mobile-nav.js"></script>
+</body>
+</html>

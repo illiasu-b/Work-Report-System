@@ -1,0 +1,97 @@
+/* public/css/tables.css */
+
+/* ===========================
+   TABLE STYLES
+   =========================== */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-md);
+}
+
+.table thead {
+  background-color: var(--light-bg);
+}
+
+.table th {
+  padding: var(--space-md);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  border-bottom: 2px solid var(--border-color);
+  font-size: var(--font-size-sm);
+  color: var(--dark-text);
+}
+
+.table td {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  font-size: var(--font-size-base);
+}
+
+.table tbody tr:hover {
+  background-color: var(--light-bg);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Table Variants */
+.table-striped tbody tr:nth-child(odd) {
+  background-color: var(--lighter-bg);
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--primary-light);
+}
+
+/* Status Badges in Tables */
+.badge {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.badge-pending {
+  background-color: var(--warning-light);
+  color: #856404;
+}
+
+.badge-approved {
+  background-color: var(--success-light);
+  color: #155724;
+}
+
+.badge-rejected {
+  background-color: var(--danger-light);
+  color: #721C24;
+}
+
+.badge-active {
+  background-color: var(--success-light);
+  color: #155724;
+}
+
+.badge-disabled {
+  background-color: #E2E3E5;
+  color: #383D41;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+  .table {
+    font-size: var(--font-size-sm);
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-sm);
+  }
+}

@@ -1,0 +1,47 @@
+/* employees.css - mobile refinements for the employee management table */
+
+/* Wrap the table so it scrolls horizontally instead of squashing on small screens */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive .table {
+  min-width: 700px; /* keeps columns readable; triggers horizontal scroll below this width */
+}
+
+/* Bigger, easier-to-tap action buttons on touch screens */
+.table-responsive .btn-text {
+  font-size: 1.1rem;
+  padding: 6px 8px;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .top-bar-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .top-bar-actions select {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 12px;
+  }
+
+  .table-responsive .btn-text {
+    font-size: 1rem;
+    padding: 4px 6px;
+  }
+}

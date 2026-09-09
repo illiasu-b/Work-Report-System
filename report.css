@@ -1,0 +1,210 @@
+/* public/css/reports.css */
+
+.report-form-container {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-section {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.form-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.password-field {
+  position: relative;
+  display: flex;
+}
+
+.password-field input {
+  flex: 1;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+.password-requirements {
+  margin-top: 8px;
+}
+
+.password-requirements small {
+  color: #999;
+}
+
+.progress-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-input input[type="range"] {
+  flex: 1;
+}
+
+.progress-input span {
+  font-weight: 600;
+  color: var(--primary-color);
+  min-width: 50px;
+}
+
+.file-upload-area {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.file-upload-area:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(33, 150, 243, 0.05);
+}
+
+.file-upload-area.dragover {
+  border-color: var(--primary-color);
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+.file-upload-icon {
+  margin-bottom: 12px;
+  font-size: 2rem;
+}
+
+.file-upload-area h4 {
+  color: var(--dark-text);
+  margin-bottom: 4px;
+}
+
+.file-upload-area p {
+  color: #999;
+}
+
+.attachments-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.attachment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #F9F9F9;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.file-icon {
+  font-size: 1.5rem;
+  width: 30px;
+  text-align: center;
+}
+
+.file-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.file-size {
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  transition: var(--transition);
+}
+
+.remove-file:hover {
+  transform: scale(1.2);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.form-actions button,
+.form-actions a {
+  flex: 1;
+  text-align: center;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.checkbox input {
+  width: auto;
+  cursor: pointer;
+}
+
+.checkbox span {
+  font-size: 0.95rem;
+}
+
+.error-message {
+  display: block;
+  color: var(--danger-color);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}

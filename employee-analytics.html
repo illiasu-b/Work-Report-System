@@ -1,0 +1,124 @@
+<!-- employee-analytics.html (Work Report System\employee-analytics.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Analytics - Work Report System</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="tables.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="utiilities.css"> <!-- matches actual filename on disk (typo: "utiilities") -->
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h2>Work Report System</h2>
+            </div>
+            <div class="navbar-menu">
+                <!-- NOTE: employee-dashboard.html, my-reports.html, and profile.html don't exist yet - build these next -->
+                <a href="employee-dashboard.html" class="nav-link">Dashboard</a>
+                <a href="my-reports.html" class="nav-link">My Reports</a>
+                <a href="employee-analytics.html" class="nav-link active">Analytics</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <button class="nav-link" id="logoutBtn">Logout</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>My Analytics</h1>
+                <p>Track your work report submissions and performance</p>
+            </div>
+
+            <!-- Summary Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <h3>Total Reports</h3>
+                        <p class="stat-value" id="myTotalReports">0</p>
+                        <small>All submissions</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✓</div>
+                    <div class="stat-content">
+                        <h3>Approved</h3>
+                        <p class="stat-value" id="myApprovedReports">0</p>
+                        <small>Approved reports</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✕</div>
+                    <div class="stat-content">
+                        <h3>Rejected</h3>
+                        <p class="stat-value" id="myRejectedReports">0</p>
+                        <small>Need revision</small>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-content">
+                        <h3>Pending</h3>
+                        <p class="stat-value" id="myPendingReports">0</p>
+                        <small>Under review</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-section">
+                <div class="charts-grid dual-chart">
+                    <div class="chart-container">
+                        <h3>My Report Status</h3>
+                        <canvas id="myStatusChart"></canvas>
+                    </div>
+
+                    <div class="chart-container">
+                        <h3>Submissions This Month</h3>
+                        <canvas id="myMonthlyChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container full-width">
+                        <h3>Hours Worked (Last 7 Days)</h3>
+                        <canvas id="myHoursChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-container full-width">
+                        <h3>Report Progress Trend</h3>
+                        <canvas id="myProgressChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
+    <script src="firestore.js"></script>
+    <script src="utils.js"></script>
+    <script src="employee-analytics.js"></script>
+</body>
+</html>

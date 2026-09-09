@@ -1,0 +1,150 @@
+/* public/css/cards.css */
+
+/* ===========================
+   CARD STYLES
+   =========================== */
+
+.card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-md);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--space-md);
+}
+
+.card-header h2,
+.card-header h3 {
+  margin: 0;
+}
+
+.card-body {
+  padding: var(--space-md) 0;
+}
+
+.card-footer {
+  padding: var(--space-md) 0;
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--space-md);
+  display: flex;
+  gap: var(--space-md);
+  justify-content: flex-end;
+}
+
+/* Stat Card */
+.stat-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  flex-shrink: 0;
+}
+
+.stat-content h3 {
+  font-size: var(--font-size-sm);
+  color: var(--light-text);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+  margin-bottom: var(--space-sm);
+}
+
+.stat-content small {
+  color: var(--lighter-text);
+}
+
+/* Metric Card */
+.metric-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--primary-color);
+  transition: all var(--transition-base);
+}
+
+.metric-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+.metric-card h4 {
+  color: var(--lighter-text);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+}
+
+.metric-value {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+  margin: var(--space-md) 0;
+}
+
+.metric-card small {
+  color: var(--lighter-text);
+}
+
+/* Chart Card */
+.chart-container {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  position: relative;
+  min-height: 300px;
+}
+
+.chart-container:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.chart-container h3 {
+  margin-bottom: var(--space-md);
+  color: var(--dark-text);
+  font-size: var(--font-size-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.chart-container canvas {
+  max-height: 350px;
+}

@@ -1,0 +1,249 @@
+<!-- report.html (Work Report System\report.html) -->
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Report - Work Report System</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="buttons.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="tables.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="responsive.css">
+    <link rel="stylesheet" href="utiilities.css"> <!-- matches actual filename on disk (typo: "utiilities") -->
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="report.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h2>Work Report System</h2>
+            </div>
+            <div class="navbar-menu">
+                <a href="employee-dashboard.html" class="nav-link">Dashboard</a>
+                <a href="my-reports.html" class="nav-link">My Reports</a>
+                <a href="employee-analytics.html" class="nav-link">Analytics</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <button class="nav-link" id="logoutBtn">Logout</button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Submit Daily Work Report</h1>
+                <p>Share your progress and achievements for the day</p>
+            </div>
+
+            <div class="report-form-container">
+                <form id="reportForm" class="report-form">
+                    <!-- Employee Information Section -->
+                    <section class="form-section">
+                        <h3>Employee Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Employee Name</label>
+                                <input type="text" id="employeeName" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Employee ID</label>
+                                <input type="text" id="employeeId" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Department</label>
+                                <input type="text" id="department" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Position</label>
+                                <input type="text" id="position" disabled>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Report Date & Time Section -->
+                    <section class="form-section">
+                        <h3>Report Date & Time</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reportDate">Report Date *</label>
+                                <input 
+                                    type="date" 
+                                    id="reportDate" 
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="startTime">Start Time *</label>
+                                <input 
+                                    type="time" 
+                                    id="startTime" 
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="endTime">End Time *</label>
+                                <input 
+                                    type="time" 
+                                    id="endTime" 
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="hoursWorked">Hours Worked *</label>
+                                <input 
+                                    type="number" 
+                                    id="hoursWorked" 
+                                    min="0" 
+                                    max="24" 
+                                    step="0.5" 
+                                    required
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label for="progressPercentage">Progress Percentage *</label>
+                                <div class="progress-input">
+                                    <input 
+                                        type="range" 
+                                        id="progressPercentage" 
+                                        min="0" 
+                                        max="100" 
+                                        value="50"
+                                        required
+                                    >
+                                    <span id="progressValue">50%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Work Details Section -->
+                    <section class="form-section">
+                        <h3>Work Details</h3>
+                        <div class="form-group">
+                            <label for="tasksCompleted">Tasks Completed *</label>
+                            <textarea 
+                                id="tasksCompleted" 
+                                placeholder="List all tasks you completed today..." 
+                                rows="4" 
+                                required
+                            ></textarea>
+                            <small>Describe what you accomplished today</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="challengesFaced">Challenges Faced</label>
+                            <textarea 
+                                id="challengesFaced" 
+                                placeholder="Describe any challenges or obstacles you encountered..." 
+                                rows="4"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="solutionsImplemented">Solutions Implemented</label>
+                            <textarea 
+                                id="solutionsImplemented" 
+                                placeholder="Explain how you overcame the challenges..." 
+                                rows="4"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tomorrowsPlan">Tomorrow's Plan *</label>
+                            <textarea 
+                                id="tomorrowsPlan" 
+                                placeholder="What do you plan to accomplish tomorrow?..." 
+                                rows="4" 
+                                required
+                            ></textarea>
+                        </div>
+                    </section>
+
+                    <!-- Priority & Classification -->
+                    <section class="form-section">
+                        <h3>Classification</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="priorityLevel">Priority Level *</label>
+                                <select id="priorityLevel" required>
+                                    <option value="">Select Priority</option>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Attachments Section -->
+                    <section class="form-section">
+                        <h3>Attachments</h3>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <div class="file-upload-icon">
+                                <svg width="48" height="48" viewBox="0 0 48 48">
+                                    <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4m-2 30h4v-10h6l-8-8-8 8h6v10z"/>
+                                </svg>
+                            </div>
+                            <h4>Drag and drop files here</h4>
+                            <p>or click to select files</p>
+                            <input 
+                                type="file" 
+                                id="fileInput" 
+                                multiple 
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png"
+                                hidden
+                            >
+                        </div>
+                        <div id="attachmentsList" class="attachments-list"></div>
+                    </section>
+
+                    <!-- Additional Notes -->
+                    <section class="form-section">
+                        <h3>Additional Notes</h3>
+                        <div class="form-group">
+                            <label for="additionalNotes">Additional Notes</label>
+                            <textarea 
+                                id="additionalNotes" 
+                                placeholder="Any additional comments or notes..." 
+                                rows="3"
+                            ></textarea>
+                        </div>
+                    </section>
+
+                    <!-- Form Actions -->
+                    <section class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            Submit Report
+                        </button>
+                        <a href="employee-dashboard.html" class="btn btn-secondary">
+                            Cancel
+                        </a>
+                    </section>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
+    <script src="firestore.js"></script>
+    <script src="utils.js"></script>
+    <script src="report.js"></script>
+</body>
+</html>
