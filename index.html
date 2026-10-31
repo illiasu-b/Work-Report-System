@@ -29,7 +29,10 @@
         <a href="index.html" class="navbar-brand-landing">
             📊 Work Report System
         </a>
-        <div class="navbar-links">
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+
+        <div class="navbar-links" id="navLinks">
             <a href="#features">Features</a>
             <a href="#benefits">Benefits</a>
             <a href="#roles">User Roles</a>
@@ -241,5 +244,23 @@
             }
         });
     </script>
+                <script>
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.textContent = isOpen ? '✕' : '☰';
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close the menu after tapping a link
+  navLinks.querySelectorAll('a').forEach(link =>
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.textContent = '☰';
+    })
+  );
+</script>
 </body>
 </html>
