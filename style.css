@@ -429,4 +429,53 @@ textarea {
     transform: translateY(0);
     opacity: 1;
   }
+} 
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #2196f3;
+}
+
+@media (max-width: 768px) {
+  .navbar-landing {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .navbar-links {
+    display: none;            /* hidden until ☰ is tapped */
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 0;
+    margin-top: 8px;
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .navbar-links a {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+
+  .navbar-links a.btn-nav {
+    margin-top: 8px;
+    text-align: center;
+    border-radius: 8px;
+    border-bottom: none;
+  }
 }
