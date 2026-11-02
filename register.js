@@ -46,7 +46,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
   if (success) {
     setTimeout(() => {
-      window.location.href = '/pages/auth/login.html';
+      window.location.href = "login.html";
     }, 1500);
   } else {
     submitBtn.disabled = false;
