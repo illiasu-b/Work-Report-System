@@ -269,14 +269,18 @@ class AuthManager {
     // Otherwise: already on a page that matches their role - no redirect needed.
   }
 
-  // Redirect to login if not authenticated
+    // Redirect to login if not authenticated
   redirectToLogin() {
-    const currentPage = window.location.pathname;
-    if (!currentPage.includes('login') && !currentPage.includes('register') && !currentPage.includes('index')) {
+    const publicPages = ['login.html', 'register.html', 'index.html', 'reset-password.html', ''];
+    const currentPage = window.location.pathname.split('/').pop();
+
+    // Netlify may serve /reset-password without ".html", so check both forms
+    const isPublic = publicPages.some(p => p === currentPage || p.replace('.html', '') === currentPage);
+
+    if (!isPublic) {
       window.location.href = 'login.html';
     }
   }
-
   // Check if user is authenticated
   isAuthenticated() {
     return this.currentUser !== null;
