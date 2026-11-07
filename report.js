@@ -129,20 +129,22 @@ function handleFiles(files) {
     ? currentSettings.allowedFileTypes
     : APP_CONFIG.ALLOWED_FILE_TYPES;
 
-  const maxSizeBytes = currentSettings.maxFileSizeMB
+    const FIRESTORE_FILE_LIMIT = 650 * 1024; // files are stored in Firestore, about 1 MB per document
+  const configuredMax = currentSettings.maxFileSizeMB
     ? currentSettings.maxFileSizeMB * 1024 * 1024
     : APP_CONFIG.MAX_FILE_SIZE;
+  const maxSizeBytes = Math.min(configuredMax, FIRESTORE_FILE_LIMIT);
 
   for (let file of files) {
     const fileExt = file.name.split('.').pop().toLowerCase();
 
-    if (!allowedTypes.includes(fileExt)) {
+        if (!allowedTypes.includes(fileExt)) {
       showNotification(`File type .${fileExt} is not allowed (allowed: ${allowedTypes.join(', ')})`, 'error');
       continue;
     }
 
     if (file.size > maxSizeBytes) {
-      showNotification(`File ${file.name} exceeds the ${currentSettings.maxFileSizeMB || 'default'}MB size limit`, 'error');
+      showNotification(`File ${file.name} is too large (maximum ${Math.floor(maxSizeBytes / 1024)} KB)`, 'error');
       continue;
     }
 
@@ -264,9 +266,25 @@ async function handleFormSubmit(e) {
     const reportId = await reportManager.submitReport(reportData);
 
     if (reportId) {
-      // Upload attachments
-      for (let file of attachments) {
-        await reportManager.uploadAttachment(reportId, file);
+      // Upload attachments and keep track of any that fail
+      const failed = [];
+      for (const file of attachments) {
+        const result = await reportManager.uploadAttachment(reportId, file);
+        if (!result) failed.push(file.name);
+      }
+
+      if (failed.length) {
+        // Roll back so the employee can submit again instead of ending up with a report missing its files
+        try {
+          await reportManager.deleteAttachments(reportId);
+          await db.collection('reports').doc(reportId).delete();
+          showNotification(`Report not submitted. These files could not be attached: ${failed.join(', ')}. Please try again.`, 'error');
+        } catch (rollbackError) {
+          console.error('Rollback error:', rollbackError);
+          showNotification(`Report saved, but these files could not be attached: ${failed.join(', ')}. Tell your administrator.`, 'error');
+          setTimeout(() => { window.location.href = 'my-reports.html'; }, 4000);
+        }
+        return;
       }
 
       if (currentSettings.notifyOnSubmit) {
@@ -282,7 +300,6 @@ async function handleFormSubmit(e) {
     submitBtn.innerHTML = 'Submit Report';
   }
 }
-
 async function emailAdminsOnSubmit(reportData) {
   try {
     const adminsSnapshot = await db.collection('users').where('role', '==', 'admin').get();

@@ -335,28 +335,45 @@ class ReportManager {
     }
   }
 
-  // Upload attachment
+    // Upload attachment (stored in Firestore, no Cloud Storage needed)
   async uploadAttachment(reportId, file) {
+    const MAX_BYTES = 650 * 1024; // Firestore documents are limited to about 1 MB
+    let fileDocRef = null;
+
     try {
-      if (file.size > APP_CONFIG.MAX_FILE_SIZE) {
-        showNotification('File size exceeds 5MB limit', 'error');
+      if (file.size > MAX_BYTES) {
+        showNotification('File is too large. Maximum size is 650 KB.', 'error');
         return null;
       }
 
-      const fileName = `${Date.now()}_${file.name}`;
-      const storageRef = storage.ref(
-        `report-attachments/${authManager.getCurrentUserId()}/${reportId}/${fileName}`
-      );
+      const employeeId = authManager.getCurrentUserId();
 
-      const snapshot = await storageRef.put(file);
-      const downloadURL = await snapshot.ref.getDownloadURL();
+      // Read the file as a data URL (text)
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
 
-      // Add attachment to report
-      const attachment = {
+      // Save the file content in its own collection
+      fileDocRef = await db.collection('reportFiles').add({
+        reportId,
+        employeeId,
         fileName: file.name,
         fileSize: file.size,
-        downloadURL,
+        fileType: file.type || '',
+        data: dataUrl,
         uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      // Link it to the report (no serverTimestamp inside arrays)
+      const attachment = {
+        fileId: fileDocRef.id,
+        fileName: file.name,
+        fileSize: file.size,
+        fileType: file.type || '',
+        uploadedAt: new Date()
       };
 
       await db.collection('reports').doc(reportId).update({
@@ -364,11 +381,12 @@ class ReportManager {
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
 
-      showNotification('File attached successfully!', 'success');
-      return downloadURL;
+      return attachment;
     } catch (error) {
       console.error('Attachment upload error:', error);
-      showNotification(error.message, 'error');
+      // Clean up the orphan file document if linking failed
+      if (fileDocRef) { try { await fileDocRef.delete(); } catch (e) {} }
+      showNotification('Attachment failed: ' + error.message, 'error');
       return null;
     }
   }
@@ -380,8 +398,11 @@ class ReportManager {
       const attachments = reportDoc.data().attachments || [];
 
       for (const attachment of attachments) {
-        const fileRef = storage.refFromURL(attachment.downloadURL);
-        await fileRef.delete();
+        if (attachment.fileId) {
+          await db.collection('reportFiles').doc(attachment.fileId).delete();
+        } else if (attachment.downloadURL) {
+          await storage.refFromURL(attachment.downloadURL).delete();
+        }
       }
     } catch (error) {
       console.error('Delete attachments error:', error);

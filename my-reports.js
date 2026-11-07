@@ -166,30 +166,34 @@ function openReportModal(reportId) {
     <p><strong>Solutions Implemented:</strong><br>${report.solutionsImplemented || '-'}</p>
     <p><strong>Tomorrow's Plan:</strong><br>${report.tomorrowsPlan || '-'}</p>
     ${report.additionalNotes ? `<p><strong>Additional Notes:</strong><br>${report.additionalNotes}</p>` : ''}
-    ${renderAttachmentsList(report.attachments)}
+    ${renderAttachmentsList(report)}
     ${report.reviewComment ? `<hr><p><strong>Manager Comment:</strong><br>${report.reviewComment}</p>` : ''}
   `;
 
   document.getElementById('reportModal').classList.add('active');
 }
 
-function renderAttachmentsList(attachments) {
-  if (!attachments || attachments.length === 0) return '';
+function renderAttachmentsList(report) {
+  const attachments = report.attachments || [];
+  if (attachments.length === 0) return '';
 
   return `
     <hr>
     <p><strong>Attachments:</strong></p>
     <div class="attachments-list">
-      ${attachments.map(a => `
+      ${attachments.map((a, i) => `
         <div class="attachment-item">
           <div class="file-info">
             <span class="file-icon">${getFileIconForName(a.fileName)}</span>
             <div class="file-details">
-              <span class="file-name">${a.fileName}</span>
+              <span class="file-name">${esc(a.fileName)}</span>
               <span class="file-size">${formatFileSizeDisplay(a.fileSize)}</span>
             </div>
           </div>
-          <a href="${a.downloadURL}" target="_blank" rel="noopener noreferrer" class="btn btn-text">⬇️ Download</a>
+          <span>
+            <button type="button" class="btn btn-text" onclick="previewAttachment('${report.id}', ${i})">👁️ Preview</button>
+            <button type="button" class="btn btn-text" onclick="downloadAttachment('${report.id}', ${i})">⬇️ Download</button>
+          </span>
         </div>
       `).join('')}
     </div>
@@ -211,6 +215,89 @@ function formatFileSizeDisplay(bytes) {
   const sizes = ['Bytes', 'KB', 'MB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+// ---------- Attachment helpers ----------
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+const fileUrlCache = {};
+
+function findAttachment(reportId, index) {
+  const r = allMyReports.find(x => x.id === reportId);
+  return r && r.attachments ? r.attachments[index] : null;
+}
+
+async function getAttachmentUrl(a) {
+  if (a.downloadURL) return a.downloadURL;
+  if (fileUrlCache[a.fileId]) return fileUrlCache[a.fileId];
+
+  const doc = await db.collection('reportFiles').doc(a.fileId).get();
+  if (!doc.exists) throw new Error('File not found');
+  const blob = await (await fetch(doc.data().data)).blob();
+  const url = URL.createObjectURL(blob);
+  fileUrlCache[a.fileId] = url;
+  return url;
+}
+
+function attachmentKind(a) {
+  const name = (a.fileName || '').toLowerCase();
+  if ((a.fileType || '').startsWith('image/') || /\.(png|jpe?g|gif|webp)$/.test(name)) return 'image';
+  if (a.fileType === 'application/pdf' || name.endsWith('.pdf')) return 'pdf';
+  return 'other';
+}
+
+async function downloadAttachment(reportId, index) {
+  const a = findAttachment(reportId, index);
+  if (!a) return;
+  try {
+    const url = await getAttachmentUrl(a);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = a.fileName;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error('Download error:', error);
+    showNotification('Could not download file: ' + error.message, 'error');
+  }
+}
+
+async function previewAttachment(reportId, index) {
+  const a = findAttachment(reportId, index);
+  if (!a) return;
+  try {
+    const url = await getAttachmentUrl(a);
+    const kind = attachmentKind(a);
+
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:10000;display:flex;flex-direction:column;align-items:center;padding:16px;';
+
+    let viewer;
+    if (kind === 'image') viewer = `<img src="${url}" style="max-width:100%;max-height:100%;object-fit:contain">`;
+    else if (kind === 'pdf') viewer = `<iframe src="${url}" style="width:100%;height:100%;border:0;background:#fff"></iframe>`;
+    else viewer = '<p style="color:#fff">No preview is available for this file type. Use Download.</p>';
+
+    overlay.innerHTML = `
+      <div style="width:100%;max-width:900px;display:flex;justify-content:space-between;align-items:center;color:#fff;margin-bottom:8px;gap:8px;flex-wrap:wrap">
+        <strong>${esc(a.fileName)}</strong>
+        <span>
+          <button type="button" id="pvDownload" class="btn">Download</button>
+          <button type="button" id="pvClose" class="btn">Close</button>
+        </span>
+      </div>
+      <div style="width:100%;max-width:900px;flex:1;min-height:0;display:flex;justify-content:center;align-items:center;">${viewer}</div>`;
+
+    document.body.appendChild(overlay);
+    overlay.querySelector('#pvClose').onclick = () => overlay.remove();
+    overlay.querySelector('#pvDownload').onclick = () => downloadAttachment(reportId, index);
+  } catch (error) {
+    console.error('Preview error:', error);
+    showNotification('Could not open file: ' + error.message, 'error');
+  }
 }
 
 function closeReportModal() {
